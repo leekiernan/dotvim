@@ -14,6 +14,7 @@ set t_Co=256
 set shell=bash
 
 syntax on
+filetype plugin on
 filetype plugin indent on
 filetype indent on
 
@@ -50,6 +51,9 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 set smartindent
+set ai
+set si
+
 
 " Usability info"
 set incsearch
@@ -70,13 +74,22 @@ endfunction
 " Indent if we're at the beginning of a line. Else, do completion.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! InsertTabWrapper()
-    let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-        return "\<tab>"
-    else
-        return "\<c-p>"
-    endif
+  let col = col('.') - 1
+  if !col || getline('.')[col - 1] !~ '\k'
+    return "\<tab>"
+  else
+    return "\<c-p>"
+  endif
 endfunction
+function! CleverTab()
+  if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+    return "\<Tab>"
+  else
+    return "\<C-N>"
+  endif
+endfunction
+inoremap <Tab> <C-R>=CleverTab()<CR>
+
 
 "commands remap"
 :command WQ wq
@@ -103,3 +116,5 @@ nmap <silent> <C-l> :wincmd l<CR>
 
 imap <Tab> <C-N>
 imap <C-L> <Space>=><Space>
+
+au BufRead,BufNewFile *.php set ft=php.html
