@@ -100,6 +100,8 @@ inoremap <Tab> <C-R>=CleverTab()<CR>
 "Custom mappings
 map <F7> mzgg=G`z<CR>
 
+nmap :qq :q!
+nmap qq :q!<CR>
 nmap ri<Leader> mzgg=G`z
 nmap <C-p> :CtrlP<CR>"
 nmap G Gzz
@@ -118,3 +120,4 @@ imap <Tab> <C-N>
 imap <C-L> <Space>=><Space>
 
 au BufRead,BufNewFile *.php set ft=php.html
+au BufRead,BufNewFile *.html.erb set ft=eruby.html
